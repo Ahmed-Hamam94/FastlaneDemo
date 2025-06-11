@@ -13,8 +13,6 @@ protocol TextManipulatorProtocol {
     
 }
 
-
-
 final class TextManipulator: TextManipulatorProtocol {
     
     func removeFirstLetter(from text: String) -> String {
