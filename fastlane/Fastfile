@@ -1,0 +1,75 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Description of what the lane does"
+  lane :custom_lane do
+    print "Fastlane works successfully on FastlaneTest iOS"
+  end
+
+desc "Create app on apple developer portal and apple store connect"
+lane :create_app do
+  produce(
+    username: 'ahmedelsayedhamam1@gmail.com',
+    app_identifier: 'A.FastlaneDemo',
+    app_name: 'FastlaneDemo',
+    language: 'English',
+    app_version: '1.0',
+    sku: 'Fatlane_Test',
+    team_name: 'SunApps GmbH', # only necessary when in multiple teams
+   )
+ end
+
+desc "Run Slather"
+lane :code_coverage do
+  clear_app_derived_data
+  execute_tests
+  slather
+end
+
+desc "Build iOS App"
+ lane :build_locally do
+  gym(
+    configuration: "Debug",
+    scheme: "FastlaneDemo",
+  )
+  end
+
+desc "Run unit tests"
+lane :execute_tests do
+  scan(
+    scheme: "FastlaneDemo",
+    clean: true,
+    output_types: "",
+    output_directory: ""
+  )
+end
+
+ desc "Clear Derived Data for FastlaneDemo"
+  lane :clear_app_derived_data do
+    derived_data_dir = File.expand_path("~/Library/Developer/Xcode/DerivedData")
+    app_derived_data = Dir.glob("#{derived_data_dir}/FastlaneDemo-*").first
+
+    if app_derived_data && File.directory?(app_derived_data)
+      sh "rm -rf #{app_derived_data}"
+      UI.success("✅ Cleared Derived Data for FastlaneDemo at: #{app_derived_data}")
+    else
+      UI.message("⚠️ No Derived Data found for FastlaneDemo")
+    end
+  end
+end
+

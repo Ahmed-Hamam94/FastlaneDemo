@@ -1,0 +1,9 @@
+coverage_service: html
+xcodeproj: FastlaneDemo.xcodeproj
+scheme: FastlaneDemo
+output_directory: fastlane/coverage
+source_directory: FastlaneDemo
+binary_basename: FastlaneDemo
+derived_data_path: ~/Library/Developer/Xcode/DerivedData
+ignore:
+  - "*/Tests/*"
